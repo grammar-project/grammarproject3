@@ -1,0 +1,26 @@
+Vazir
+Vazir.woff
+Vazir.woff2
+Vazir-Bold
+Vazir-Bold.woff
+Vazir-Bold.woff2
+Vazir-Light.woff
+Vazir-Light.woff2
+Vazir-Medium
+Vazir-Medium.woff
+Vazir-Medium.woff2
+Vazir-Thin
+Vazir-Thin.woff
+Vazir-Thin.woff2
+
+
+dana-bold.woff
+dana-bolditalic.woff
+dana-regular.woff
+dana-regularitalic.woff
+dana-bold.woff2
+dana-bolditalic.woff2
+dana-regular.woff2
+dana-regularitalic.woff2
+Gheytoon Bold.woff2
+Gheytoon Regular.woff2

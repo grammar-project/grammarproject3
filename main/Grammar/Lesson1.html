@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>درس اول: Understanding People | Vision 2</title>
+    <!-- Font Loaders & Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* تعریف فونت‌های محلی پوشه fonts */
+        @font-face {
+            font-family: 'Dana';
+            src: url('fonts/dana-regular.woff2') format('woff2'),
+                 url('fonts/dana-regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Dana';
+            src: url('fonts/dana-regularitalic.woff2') format('woff2'),
+                 url('fonts/dana-regularitalic.woff') format('woff');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Dana';
+            src: url('fonts/dana-bold.woff2') format('woff2'),
+                 url('fonts/dana-bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Dana';
+            src: url('fonts/dana-bolditalic.woff2') format('woff2'),
+                 url('fonts/dana-bolditalic.woff') format('woff');
+            font-weight: 700;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir-Thin.woff2') format('woff2'),
+                 url('fonts/Vazir-Thin.woff') format('woff');
+            font-weight: 100;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir-Light.woff2') format('woff2'),
+                 url('fonts/Vazir-Light.woff') format('woff');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir.woff2') format('woff2'),
+                 url('fonts/Vazir.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir-Medium.woff2') format('woff2'),
+                 url('fonts/Vazir-Medium.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir-Bold.woff2') format('woff2'),
+                 url('fonts/Vazir-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Gheytoon';
+            src: url('fonts/Gheytoon Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gheytoon';
+            src: url('fonts/Gheytoon Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            /* هارمونی رنگ سازمانی قرمز ملایم (Soft Crimson & Rose) */
+            --bg: #120608;
+            --c: #fb7185;      /* Rose 400 - رنگ اصلی ملایم */
+            --v: #f43f5e;      /* Rose 500 - رنگ مکمل */
+            --a: #fbbf24;      /* Amber 400 - رنگ تاکیدی */
+            --g: #34d399;      /* Emerald 400 - پاسخ صحیح */
+            --r: #e11d48;      /* Rose 600 - پاسخ اشتباه */
+            --t: #f8fafc;
+            --m: #cbd5e1;
+            --ease: cubic-bezier(.7, 0, .2, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg);
+            color: var(--t);
+            font-family: 'Dana', 'Vazir', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1, h2 {
+            font-family: 'Gheytoon', 'Dana', 'Vazir', sans-serif;
+        }
+
+        .en {
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-block;
+            font-family: 'Dana', 'Vazir', sans-serif;
+        }
+
+        /* 3D Background Lighting & Floor Grid */
+        .bg { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+        .orb {
+            position: absolute;
+            width: 55vmax;
+            height: 55vmax;
+            border-radius: 50%;
+            filter: blur(105px);
+            opacity: 0.24;
+            animation: drift 20s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+        .orb:nth-child(1) { background: var(--v); top: -20vmax; right: -15vmax; }
+        .orb:nth-child(2) { background: var(--c); bottom: -25vmax; left: -15vmax; animation-delay: -6s; }
+        .orb:nth-child(3) { background: #fda4af; width: 35vmax; height: 35vmax; top: 35%; left: 40%; opacity: 0.12; animation-delay: -12s; }
+
+        @keyframes drift {
+            to { transform: translate3d(6vmax, -4vmax, 0) scale(1.15); }
+        }
+
+        .floor {
+            position: absolute;
+            left: -50%; right: -50%; bottom: -10%; height: 60%;
+            transform: perspective(500px) rotateX(68deg);
+            opacity: 0.25;
+            background: linear-gradient(90deg, rgba(251, 113, 133, 0.25) 1px, transparent 1px) 0 0/60px 60px,
+                        linear-gradient(rgba(251, 113, 133, 0.25) 1px, transparent 1px) 0 0/60px 60px;
+            -webkit-mask-image: linear-gradient(to top, #000 20%, transparent 90%);
+            mask-image: linear-gradient(to top, #000 20%, transparent 90%);
+        }
+
+        /* 3D Scene Transitions */
+        .stage { position: fixed; inset: 0; perspective: 1400px; z-index: 1; overflow: hidden; }
+        .scene {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.9s var(--ease), opacity 0.6s var(--ease);
+            will-change: transform, opacity;
+        }
+        .scene[data-s="next"] { transform: translate3d(0, 80%, -600px) rotateX(-35deg); }
+        .scene[data-s="prev"] { transform: translate3d(0, -80%, -600px) rotateX(35deg); }
+        .scene[data-s="cur"] { opacity: 1; pointer-events: auto; transform: none; }
+
+        .pane {
+            height: 100%;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: #f43f5e transparent;
+            padding: calc(90px + env(safe-area-inset-top)) 4vw calc(120px + env(safe-area-inset-bottom));
+        }
+
+        .wrap { max-width: 1040px; margin: auto; display: grid; gap: 28px; }
+        .pane.hero { display: grid; place-items: center; overflow: hidden; padding-bottom: 60px; }
+
+        /* Reveal Animations */
+        .rv {
+            opacity: 0;
+            transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s;
+            transition-delay: var(--d, 0s);
+        }
+        .rv[data-fx="zoom"] { transform: scale(0.75) translateZ(-80px); }
+        .rv[data-fx="left"] { transform: translateX(-70px) rotateY(20deg); }
+        .rv[data-fx="right"] { transform: translateX(70px) rotateY(-20deg); }
+        .rv[data-fx="blur"] { filter: blur(16px); transform: translateY(30px) scale(0.95); }
+        .rv[data-fx="flip"] { transform: perspective(800px) rotateX(-65deg); transform-origin: top; }
+        .rv[data-fx="up"] { transform: translateY(55px); }
+        .rv.in { opacity: 1; transform: none; filter: none; }
+
+        /* 3D Interactive Tilt on Hover */
+        .tilt {
+            transform-style: preserve-3d;
+            transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+            transition: transform 0.25s ease-out, border-color 0.3s, box-shadow 0.3s;
+        }
+        .tilt:hover {
+            box-shadow: 0 28px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(251, 113, 133, 0.15);
+        }
+
+        /* Glassmorphism Card Style */
+        .glass {
+            background: rgba(255, 255, 255, 0.035);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.45);
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .glass:hover {
+            border-color: rgba(251, 113, 133, 0.35);
+        }
+
+        /* Banner & Floating Chips with 3D Parallax & Shine */
+        .banner-container {
+            position: relative;
+            width: min(92vw, 880px);
+            border-radius: 32px;
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.12);
+            animation: heroFloat 6s ease-in-out infinite;
+            transition: translate 0.25s ease-out;
+        }
+        .banner-container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.18) 50%, transparent 60%);
+            transform: translateX(-130%);
+            animation: shine 5.5s 1.5s infinite;
+            pointer-events: none;
+        }
+        @keyframes shine {
+            to { transform: translateX(130%); }
+        }
+        @keyframes heroFloat {
+            50% { transform: translateY(-10px) rotateX(2deg); }
+        }
+
+        .chip-f {
+            position: absolute;
+            padding: 8px 18px;
+            border-radius: 40px;
+            background: rgba(159, 18, 57, 0.45);
+            border: 1px solid rgba(251, 113, 133, 0.35);
+            backdrop-filter: blur(12px);
+            font-size: 0.95rem;
+            color: #fecdd3;
+            font-weight: 700;
+            direction: ltr;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+            transform: translate3d(calc(var(--mx, 0) * var(--z, 25) * 1px), calc(var(--my, 0) * var(--z, 25) * 1px), 0);
+            animation: bob 6s ease-in-out infinite alternate;
+            animation-delay: var(--w);
+            z-index: 10;
+        }
+        @keyframes bob {
+            50% { margin-top: -14px; }
+        }
+
+        /* Interactive Sentence Slot */
+        .slot {
+            display: inline-block;
+            min-width: 110px;
+            padding: 2px 14px;
+            border-radius: 12px;
+            border: 2px dashed var(--m);
+            text-align: center;
+            color: var(--g);
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .slot.ok {
+            border: 2px solid var(--g);
+            background: rgba(52, 211, 153, 0.15);
+            animation: pop 0.4s ease;
+        }
+        @keyframes pop { 50% { transform: scale(1.15); } }
+        @keyframes shake { 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+        .q-bad {
+            animation: shake 0.35s ease;
+            background: var(--r) !important;
+            color: #fff !important;
+            border-color: var(--r) !important;
+        }
+
+        /* Unit Flashcard 3D Flip (مطابق با ساختار lesson 1 و آیکون‌های اختصاصی) */
+        .fc { height: 190px; cursor: pointer; perspective: 1100px; }
+        .fi {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.7s cubic-bezier(.4,.2,.2,1);
+        }
+        .fc.on .fi { transform: rotateY(180deg); }
+        .fi > div {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+        .ff { background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02)); direction: ltr; }
+        .fb { transform: rotateY(180deg); background: linear-gradient(160deg, #2a0d14, #16070b); border-color: var(--c) !important; direction: ltr; }
+
+        /* Quiz & Option Buttons */
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 14px 24px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-weight: 700;
+        }
+        .quiz-option:hover {
+            background: var(--c);
+            color: #1f050a;
+            border-color: var(--c);
+            transform: translateY(-2px);
+        }
+        .quiz-option.right { background: var(--g) !important; color: #04121f !important; border-color: var(--g) !important; }
+        .quiz-option.wrong { background: var(--r) !important; color: #fff !important; border-color: var(--r) !important; }
+
+        /* Navigation Controls */
+        .dots-nav {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .dots-nav button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 0;
+            background: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dots-nav button.on {
+            background: var(--c);
+            transform: scale(1.6);
+            box-shadow: 0 0 16px var(--c);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            z-index: 30;
+            background: linear-gradient(90deg, var(--c), var(--a));
+            transform-origin: right;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="floor"></div>
+</div>
+
+<div class="progress-bar" id="bar"></div>
+
+<!-- Quick Navigation Header -->
+<header class="fixed top-0 right-0 left-0 p-4 z-20 flex justify-between items-center pointer-events-none">
+    <a href="../index.html" onclick="go(0)" class="pointer-events-auto flex items-center gap-2 text-xs font-bold px-4 py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md hover:bg-rose-500 hover:text-white transition-all">
+        <i class="fa-solid fa-users text-rose-400"></i>
+        <span>⬅️ منوی اصلی کتاب</span>
+    </a>
+    <div class="pointer-events-auto flex items-center gap-2">
+        <button id="soundToggle" onclick="toggleAudio()" class="px-3 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-xs font-medium hover:bg-white/10 transition-all text-slate-300">
+            <i class="fa-solid fa-volume-high text-rose-400"></i>
+        </button>
+    </div>
+</header>
+
+<nav class="dots-nav" id="dots"></nav>
+
+<main class="stage" id="stage">
+
+    <!-- SECTION 1: HERO / COVER -->
+    <section class="scene">
+        <div class="pane hero" id="hero">
+            <span class="chip-f" style="--z: 30; --w: 0s; top: 18%; right: 8%;">a car</span>
+            <span class="chip-f" style="--z: -40; --w: -2s; top: 28%; left: 6%;">much</span>
+            <span class="chip-f" style="--z: 45; --w: -3s; bottom: 26%; right: 8%;">a loaf of bread</span>
+            <span class="chip-f" style="--z: -25; --w: -4s; bottom: 20%; left: 8%;">many books</span>
+
+            <div class="flex flex-col items-center text-center">
+                <div class="banner-container mb-6 group" id="banner">
+                    <div class="relative w-full h-80 sm:h-96 bg-gradient-to-br from-rose-950 via-slate-950 to-red-950 flex flex-col justify-center items-center p-6 border border-rose-500/20">
+                        <div class="w-20 h-20 mb-4 rounded-3xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400 text-3xl shadow-lg shadow-rose-500/10">
+                            <i class="fa-solid fa-people-group"></i>
+                        </div>
+                        <h2 class="text-4xl sm:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-amber-300 mb-2 en">
+                            Understanding People
+                        </h2>
+                        <p class="text-rose-200/80 font-medium text-sm sm:text-base">کتاب انگلیسی پایه یازدهم - درس اول</p>
+                    </div>
+                </div>
+
+                <div class="max-w-xl">
+                    <h1 class="rv text-2xl sm:text-3xl font-bold text-slate-100 mb-3" data-fx="blur">
+                        اسم‌های قابل شمارش و غیرقابل شمارش
+                    </h1>
+                    <p class="rv text-slate-300 text-sm sm:text-base leading-relaxed" data-fx="up">
+                        گرامر درس اول Vision 2 ⟵ آشنایی با تفاوت اسم‌های قابل شمارش و غیرقابل شمارش، کمیت‌سنج‌ها و واحدهای اندازه‌گیری
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: COUNTABLE VS UNCOUNTABLE (ساختار تدریسی و جدول منظم مطابق lesson 1) -->
+    <section class="scene">
+        <div class="pane">
+            <div class="wrap">
+                <div class="flex items-center gap-3 mb-2 rv" data-fx="blur">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                        <i class="fa-solid fa-layer-group"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-rose-400">اسم‌ها دو دسته‌اند</h2>
+                    </div>
+                </div>
+
+                <p class="rv text-slate-300 text-base leading-relaxed" data-fx="up">
+                    هر اسمی یا **قابل شمارش** است (می‌شود آن را یکی‌یکی شمرد) یا **غیرقابل شمارش**. این تفاوت تعیین می‌کند چه کمیت‌سنجی کنارش بیاید.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <article class="glass tilt border-t-4 border-rose-400 rv" data-fx="left">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-rose-400 en">Countable</h3>
+                            <span class="text-xs px-2.5 py-1 rounded-md bg-rose-500/15 text-rose-300 font-bold">a / an / -s</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mb-4">مفرد و جمع دارد و با <span class="en font-bold text-rose-300">a / an</span> می‌آید.</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-black/30 p-3 rounded-xl border border-white/5">
+                                <p class="en font-bold text-rose-300 text-base">a car ⟶ two cars</p>
+                            </div>
+                            <div class="bg-black/30 p-3 rounded-xl border border-white/5">
+                                <p class="en font-normal text-slate-200">How many cars …?</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="glass tilt border-t-4 border-amber-400 rv" data-fx="right">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="text-xl font-bold text-amber-400 en">Uncountable</h3>
+                            <span class="text-xs px-2.5 py-1 rounded-md bg-amber-500/15 text-amber-300 font-bold">No a/an, No -s</span>
+                        </div>
+                        <p class="text-sm text-slate-300 mb-4">جمع نمی‌شود و با <span class="en font-bold text-amber-300">a / an</span> نمی‌آید.</p>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-black/30 p-3 rounded-xl border border-white/5">
+                                <p class="en font-bold text-amber-300 text-base">traffic · information · bread</p>
+                            </div>
+                            <div class="bg-black/30 p-3 rounded-xl border border-white/5">
+                                <p class="en font-normal text-slate-200">How much information …?</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Comparison Table (ستون‌های منظم و هم‌تراز مطابق داده‌های lesson 1) -->
+                <div class="glass overflow-x-auto rv" data-fx="zoom" dir="ltr">
+                    <table class="w-full table-fixed border-collapse text-center text-xs sm:text-sm en">
+                        <thead>
+                            <tr class="border-b border-white/15 text-slate-300 font-bold">
+                                <th class="w-1/3 p-3.5">Singular countable</th>
+                                <th class="w-1/3 p-3.5">Plural countable</th>
+                                <th class="w-1/3 p-3.5">Uncountable</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-white/10 font-bold">
+                            <tr class="rv hover:bg-white/[0.02] transition-colors" data-fx="flip" style="--d: 0.05s">
+                                <td class="p-3.5 text-rose-300">a car</td>
+                                <td class="p-3.5 text-pink-300">two / three / four cars</td>
+                                <td class="p-3.5 text-amber-300">traffic</td>
+                            </tr>
+                            <tr class="rv hover:bg-white/[0.02] transition-colors" data-fx="flip" style="--d: 0.12s">
+                                <td class="p-3.5 text-rose-300">a book</td>
+                                <td class="p-3.5 text-pink-300">some / many books</td>
+                                <td class="p-3.5 text-amber-300">some / much information</td>
+                            </tr>
+                            <tr class="rv hover:bg-white/[0.02] transition-colors" data-fx="flip" style="--d: 0.19s">
+                                <td class="p-3.5 text-rose-300">a bird</td>
+                                <td class="p-3.5 text-pink-300">lots of / a lot of birds</td>
+                                <td class="p-3.5 text-amber-300">lots of / a lot of chicken soup</td>
+                            </tr>
+                            <tr class="rv hover:bg-white/[0.02] transition-colors" data-fx="flip" style="--d: 0.26s">
+                                <td class="p-3.5 text-rose-300">a man</td>
+                                <td class="p-3.5 text-pink-300">few / a few men</td>
+                                <td class="p-3.5 text-amber-300">little / a little bread</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: INTERACTIVE SENTENCE BUILDER -->
+    <section class="scene">
+        <div class="pane">
+            <div class="wrap">
+                <div class="flex items-center gap-3 mb-2 rv" data-fx="blur">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-rose-400">many یا much؟ خودت بساز</h2>
+                </div>
+
+                <p class="rv text-slate-300 text-sm sm:text-base" data-fx="up">
+                    نوع اسم را انتخاب کن، سپس کمیت‌سنج را بزن. اگر با اسم نخواند، تکان می‌خورد.
+                </p>
+
+                <div class="flex gap-3 flex-wrap rv" data-fx="left">
+                    <button id="btnModeCount" onclick="setBuilderMode('c')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-rose-500 text-white shadow-lg shadow-rose-500/20">
+                        📚 Countable: books
+                    </button>
+                    <button id="btnModeUncount" onclick="setBuilderMode('u')" class="px-4 py-2 rounded-xl text-xs font-bold transition-all bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10">
+                        🍞 Uncountable: bread
+                    </button>
+                </div>
+
+                <div class="glass tilt en text-center text-lg sm:text-xl leading-relaxed rv" data-fx="zoom">
+                    <div id="builderQuestion" class="text-rose-300 font-bold mb-3">...</div>
+                    <div class="text-slate-100">
+                        <span id="builderPrefix">I need</span>
+                        <span id="slot" class="slot">...</span>
+                        <span id="builderSuffix">books.</span>
+                    </div>
+                </div>
+
+                <div id="builderMsg" class="text-xs font-bold text-center min-h-[20px] text-slate-300"></div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 rv" data-fx="up">
+                    <div class="p-4 rounded-2xl bg-black/30 border border-rose-500/25">
+                        <h4 class="text-xs font-bold text-rose-400 mb-2.5">فقط قابل شمارش</h4>
+                        <div class="flex flex-wrap gap-2 en">
+                            <button onclick="checkQuantifier('many', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-rose-400/40 hover:bg-rose-400 hover:text-black transition-all">many</button>
+                            <button onclick="checkQuantifier('a few', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-rose-400/40 hover:bg-rose-400 hover:text-black transition-all">a few</button>
+                            <button onclick="checkQuantifier('few', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-rose-400/40 hover:bg-rose-400 hover:text-black transition-all">few</button>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-black/30 border border-amber-500/25">
+                        <h4 class="text-xs font-bold text-amber-400 mb-2.5">فقط غیرقابل شمارش</h4>
+                        <div class="flex flex-wrap gap-2 en">
+                            <button onclick="checkQuantifier('much', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-amber-400/40 hover:bg-amber-400 hover:text-black transition-all">much</button>
+                            <button onclick="checkQuantifier('a little', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-amber-400/40 hover:bg-amber-400 hover:text-black transition-all">a little</button>
+                            <button onclick="checkQuantifier('little', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-amber-400/40 hover:bg-amber-400 hover:text-black transition-all">little</button>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-black/30 border border-emerald-500/25">
+                        <h4 class="text-xs font-bold text-emerald-400 mb-2.5">هر دو</h4>
+                        <div class="flex flex-wrap gap-2 en">
+                            <button onclick="checkQuantifier('some', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-emerald-400/40 hover:bg-emerald-400 hover:text-black transition-all">some</button>
+                            <button onclick="checkQuantifier('lots of', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-emerald-400/40 hover:bg-emerald-400 hover:text-black transition-all">lots of</button>
+                            <button onclick="checkQuantifier('a lot of', this)" class="q-btn text-xs px-3 py-1.5 rounded-full bg-white/5 border border-emerald-400/40 hover:bg-emerald-400 hover:text-black transition-all">a lot of</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: UNITS OF MEASUREMENT (ساختار و آیکون‌های اختصاصی مطابق lesson 1) -->
+    <section class="scene">
+        <div class="pane">
+            <div class="wrap">
+                <div class="flex items-center gap-3 mb-2 rv" data-fx="blur">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                        <i class="fa-solid fa-wine-bottle"></i>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-rose-400">واحدهای اندازه‌گیری</h2>
+                </div>
+
+                <p class="rv text-slate-300 text-sm sm:text-base leading-relaxed" data-fx="up">
+                    اسم غیرقابل شمارش را مستقیم نمی‌شماریم؛ واحد را می‌شماریم: <span class="en font-bold text-rose-300">two bottles of water</span>. بومی‌زبان‌ها بیشتر هنگام خرید یا در کافه از این ساختار استفاده می‌کنند. روی هر کارت بزن.
+                </p>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="unitGrid">
+                    <!-- Cards dynamically populated with local icons/ -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: INTERACTIVE QUIZ -->
+    <section class="scene">
+        <div class="pane">
+            <div class="wrap">
+                <div class="text-center max-w-xl mx-auto mb-4 rv" data-fx="blur">
+                    <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-pink-300 to-amber-300">
+                        آزمون کوتاه درس اول
+                    </h2>
+                    <p class="text-slate-300 text-sm mt-1">میزان تسلط خود بر گرامر این درس را محک بزنید!</p>
+                </div>
+
+                <div class="glass tilt quiz max-w-2xl mx-auto w-full rv" data-fx="zoom">
+                    <!-- Progress Bar -->
+                    <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-6">
+                        <div id="pg" class="h-full bg-gradient-to-r from-rose-400 to-amber-300 transition-all duration-500 w-0"></div>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div id="quizContainer">
+                        <h3 id="qs" class="en text-xl sm:text-2xl font-bold text-slate-100 mb-6 text-center">
+                            ...
+                        </h3>
+                        <div id="op" class="grid grid-cols-1 sm:grid-cols-2 gap-4 en">
+                            <!-- Options will be dynamic -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-20 text-slate-300 text-xs flex items-center gap-2 pointer-events-none opacity-75 animate-pulse">
+    <span>برای ورق زدن اسکرول کنید</span>
+    <i class="fa-solid fa-arrow-down"></i>
+</div>
+
+<script>
+// Utilities
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+const scenes = $$(".scene");
+const N = scenes.length;
+let cur = 0;
+let hold = 0;
+let lock = false;
+
+// Audio Synthesizer (Web Audio API - بدون نیاز به منبع خارجی)
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let soundEnabled = true;
+
+function playTone(freq, type = 'sine', duration = 0.15) {
+    if (!soundEnabled) return;
+    try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch(e){}
+}
+
+function toggleAudio() {
+    soundEnabled = !soundEnabled;
+    const btn = $("#soundToggle");
+    btn.innerHTML = soundEnabled 
+        ? `<i class="fa-solid fa-volume-high text-rose-400"></i>` 
+        : `<i class="fa-solid fa-volume-xmark text-slate-500"></i>`;
+}
+
+/* Builder Logic */
+const quantifiers = {
+    c: ["many", "a few", "few", "some", "lots of", "a lot of"],
+    u: ["much", "a little", "little", "some", "lots of", "a lot of"]
+};
+
+const builderSentences = {
+    c: { question: "How many books do you need?", prefix: "I need ", suffix: "books." },
+    u: { question: "How much bread is there in the kitchen?", prefix: "There is ", suffix: "bread." }
+};
+
+let builderMode = "c";
+
+function setBuilderMode(mode) {
+    builderMode = mode;
+    const isCount = mode === 'c';
+    
+    $("#btnModeCount").className = `px-4 py-2 rounded-xl text-xs font-bold transition-all ${isCount ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25' : 'bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10'}`;
+    $("#btnModeUncount").className = `px-4 py-2 rounded-xl text-xs font-bold transition-all ${!isCount ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/25' : 'bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10'}`;
+    
+    const info = builderSentences[mode];
+    $("#builderQuestion").textContent = info.question;
+    $("#builderPrefix").textContent = info.prefix;
+    $("#builderSuffix").textContent = info.suffix;
+    $("#slot").textContent = "...";
+    $("#slot").classList.remove("ok");
+    $("#builderMsg").textContent = "";
+}
+
+function checkQuantifier(q, btn) {
+    const isOk = quantifiers[builderMode].includes(q);
+    const slot = $("#slot");
+    if (isOk) {
+        slot.textContent = q;
+        slot.classList.remove("ok");
+        void slot.offsetWidth;
+        slot.classList.add("ok");
+        playTone(523.25, 'sine', 0.15);
+        $("#builderMsg").innerHTML = `<span class="text-emerald-400">✅ درست! این کمیت‌سنج با این نوع اسم می‌آید.</span>`;
+    } else {
+        if (btn) {
+            btn.classList.remove("q-bad");
+            void btn.offsetWidth;
+            btn.classList.add("q-bad");
+            setTimeout(() => btn.classList.remove("q-bad"), 450);
+        }
+        playTone(220, 'sawtooth', 0.2);
+        $("#builderMsg").innerHTML = `<span class="text-rose-400">❌ ${q} ${builderMode === 'c' ? 'با اسم غیرقابل شمارش می‌آید، نه قابل شمارش.' : 'با اسم قابل شمارش می‌آید، نه غیرقابل شمارش.'}</span>`;
+    }
+}
+
+setBuilderMode('c');
+
+/* ساخت کارت‌های واحدها دقیقاً مطابق داده‌ها و آیکون‌های فایل lesson 1 با انیمیشن ورود آبشاری */
+const units = [
+    ["bottle-svgrepo-com.svg", "a bottle of", "bottles of", "water", "بطری"],
+    ["tea-cup-food-svgrepo-com.svg", "a cup of", "cups of", "tea, coffee", "فنجان"],
+    ["glass-of-milk-svgrepo-com.svg", "a glass of", "glasses of", "water, juice", "لیوان"],
+    ["shopping-bags-svgrepo-com.svg", "a bag of", "bags of", "rice, sugar", "کیسه"],
+    ["piece-of-cake-cake-svgrepo-com.svg", "a piece of", "pieces of", "cake, paper", "تکه"],
+    ["watermelon-slice-svgrepo-com.svg", "a slice of", "slices of", "watermelon, banana", "برش"],
+    ["kilo-svgrepo-com.svg", "a kilo of", "kilos of", "meat, rice", "کیلو"],
+    ["loaf-bread-svgrepo-com.svg", "a loaf of", "loaves of", "bread", "قرص"]
+];
+
+$("#unitGrid").innerHTML = units.map((u, i) => `
+    <div class="fc tilt rv group" data-fx="zoom" style="--d: ${i * 0.07}s" onclick="this.classList.toggle('on')">
+        <div class="fi">
+            <div class="ff">
+                <img src="icons/${u[0]}" alt="${u[1]}" style="width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 8px 10px #0008)" class="mb-1">
+                <b class="text-rose-300 text-sm">${u[1]}</b>
+            </div>
+            <div class="fb">
+                <b class="text-rose-300 text-sm">two, three … ${u[2]}</b>
+                <small class="text-slate-300 text-xs">${u[3]}</small>
+                <small class="text-amber-300 text-xs mt-1">${u[4]}</small>
+            </div>
+        </div>
+    </div>
+`).join("");
+
+/* آزمون: پنج سؤال تمرین کتاب (مطابق با lesson 1) */
+const qz = [
+    ["The students need to read ___ books about history.", ["many", "much", "a little", "little"], 0],
+    ["Please buy ___ bread for breakfast.", ["a loaf of", "a bottle of", "a glass of", "a piece of"], 0],
+    ["Children should drink ___ milk.", ["a lot of", "a few", "few", "many"], 0],
+    ["We did not have ___ visitors this week.", ["much", "many", "a little", "little"], 1],
+    ["Could you please bring me ___ water?", ["a glass of", "a piece of", "a slice of", "a loaf of"], 0]
+];
+
+let qi = 0, sc = 0;
+
+function ask() {
+    const q = qz[qi];
+    $("#pg").style.width = (qi / qz.length * 100) + "%";
+
+    if (qi >= qz.length) {
+        playTone(600, 'triangle', 0.4);
+        $("#quizContainer").innerHTML = `
+            <div class="text-center py-6">
+                <div class="text-5xl font-bold text-amber-400 mb-2 en">${sc} / ${qz.length}</div>
+                <p class="text-slate-200 font-bold text-lg mb-6">${sc >= 4 ? "عالی بود! 🎉" : sc >= 3 ? "آفرین! کمی دیگر مرور کن. 💪" : "بخش‌های قبل را دوباره ببین."}</p>
+                <button onclick="resetQuiz()" class="px-6 py-3 rounded-xl bg-rose-500 text-white font-bold hover:bg-rose-400 transition-all shadow-lg shadow-rose-500/25">
+                    شروع دوباره
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    $("#qs").textContent = q[0];
+    $("#op").innerHTML = q[1].map((o, i) => `<button class="quiz-option" data-i="${i}">${o}</button>`).join("");
+
+    $$("#op .quiz-option").forEach(b => {
+        b.onclick = () => {
+            if (lock) return;
+            lock = true;
+            const idx = +b.dataset.i;
+            const isRight = idx === q[2];
+            
+            if (isRight) {
+                sc++;
+                b.classList.add("right");
+                playTone(523.25, 'sine', 0.2); // C5
+            } else {
+                b.classList.add("wrong");
+                $$("#op .quiz-option")[q[2]].classList.add("right");
+                playTone(220, 'sawtooth', 0.25); // A3
+            }
+
+            setTimeout(() => {
+                lock = false;
+                qi++;
+                ask();
+            }, 1150);
+        };
+    });
+}
+
+function resetQuiz() {
+    qi = 0;
+    sc = 0;
+    $("#quizContainer").innerHTML = `
+        <h3 id="qs" class="en text-xl sm:text-2xl font-bold text-slate-100 mb-6 text-center"></h3>
+        <div id="op" class="grid grid-cols-1 sm:grid-cols-2 gap-4 en"></div>
+    `;
+    ask();
+}
+
+ask();
+
+/* Scroll Reveal Observer & Pane Scroll Progress */
+$$(".pane").forEach(p => {
+    const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+            }
+        });
+    }, { root: p, threshold: 0.1 });
+    
+    $$(".rv", p).forEach(el => io.observe(el));
+    p.addEventListener("scroll", prog, { passive: true });
+});
+
+function pane() { return $(".pane", scenes[cur]); }
+
+function prog() {
+    const p = pane();
+    const m = p.scrollHeight - p.clientHeight;
+    const scrollPercent = (cur + (m > 0 ? p.scrollTop / m : 1)) / (N - 1 || 1);
+    $("#bar").style.transform = `scaleX(${Math.min(Math.max(scrollPercent, 0.01), 1)})`;
+}
+
+/* 3D Scene Navigation */
+function go(n) {
+    if (n < 0 || n >= N || n === cur) return;
+    playTone(400, 'sine', 0.08);
+    const back = n < cur;
+    cur = n;
+    hold = Date.now() + 900;
+    
+    scenes.forEach((s, i) => {
+        s.dataset.s = i < cur ? "prev" : i > cur ? "next" : "cur";
+    });
+
+    const p = pane();
+    if (cur === 0) {
+        p.scrollTop = 0;
+    } else {
+        p.scrollTop = back ? p.scrollHeight : 0;
+    }
+
+    $$("#dots button").forEach((d, i) => d.classList.toggle("on", i === cur));
+    prog();
+}
+
+function edge(dn) {
+    const p = pane();
+    if (cur === 0) return dn ? true : false;
+    return dn ? p.scrollTop + p.clientHeight >= p.scrollHeight - 4 : p.scrollTop <= 4;
+}
+
+function step(dn) {
+    if (edge(dn)) go(cur + (dn ? 1 : -1));
+}
+
+// Setup Navigation Dots
+scenes.forEach((s, i) => s.dataset.s = i ? "next" : "cur");
+$("#dots").innerHTML = scenes.map((_, i) => `<button aria-label="بخش ${i + 1}"></button>`).join("");
+$$("#dots button").forEach((d, i) => {
+    d.onclick = () => go(i);
+    d.classList.toggle("on", !i);
+});
+
+// Event Listeners for Navigation
+addEventListener("wheel", e => {
+    const dn = e.deltaY > 0;
+    if (!edge(dn)) {
+        hold = Date.now() + 400;
+        return;
+    }
+    if (Date.now() > hold) step(dn);
+}, { passive: true });
+
+addEventListener("keydown", e => {
+    if (["ArrowDown", "PageDown", " "].includes(e.key)) step(true);
+    else if (["ArrowUp", "PageUp"].includes(e.key)) step(false);
+});
+
+let y0 = 0, e0 = [false, false];
+addEventListener("touchstart", e => {
+    y0 = e.touches[0].clientY;
+    e0 = [edge(true), edge(false)];
+}, { passive: true });
+
+addEventListener("touchend", e => {
+    const d = y0 - e.changedTouches[0].clientY;
+    if (Math.abs(d) < 60 || Date.now() < hold) return;
+    if (d > 0 && e0[0]) go(cur + 1);
+    else if (d < 0 && e0[1]) go(cur - 1);
+}, { passive: true });
+
+/* 3D Interactive Tilt & Hero Parallax (با requestAnimationFrame برای نرمی کامل) */
+let raf = 0, px = 0, py = 0, tg = null;
+addEventListener("pointermove", e => {
+    px = e.clientX;
+    py = e.clientY;
+    tg = e.target.closest?.(".tilt");
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+        raf = 0;
+        const h = $("#hero");
+        if (h) {
+            h.style.setProperty("--mx", (px / innerWidth - 0.5).toFixed(2));
+            h.style.setProperty("--my", (py / innerHeight - 0.5).toFixed(2));
+        }
+        const b = $("#banner");
+        if (b) {
+            b.style.translate = `${(px / innerWidth - 0.5) * -18}px ${(py / innerHeight - 0.5) * -12}px`;
+        }
+        if (tg) {
+            const r = tg.getBoundingClientRect();
+            tg.style.setProperty("--ry", ((px - r.left) / r.width - 0.5) * 14 + "deg");
+            tg.style.setProperty("--rx", ((py - r.top) / r.height - 0.5) * -14 + "deg");
+        }
+    });
+}, { passive: true });
+
+document.addEventListener("pointerout", e => {
+    const t = e.target.closest?.(".tilt");
+    if (t) {
+        t.style.setProperty("--rx", "0deg");
+        t.style.setProperty("--ry", "0deg");
+    }
+});
+</script>
+
+</body>
+</html>

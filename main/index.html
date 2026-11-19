@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head class="grammarproject3@gmail.com" id="grammar@1950">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar 3D World - Vision 2</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #0b0f19;
+            color: #fff;
+            touch-action: none;
+        }
+
+        .scene-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            perspective: 1500px;
+            will-change: transform;
+        }
+
+        /* ویدیوها */
+        video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        video.active {
+            opacity: 1;
+        }
+
+        /* راهنمای حرکت (انتقال یافته به بالای صفحه) */
+        .navigation-hint {
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            letter-spacing: 0.5px;
+            animation: pulseHintTop 2.5s infinite;
+            transition: opacity 0.5s ease;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        @keyframes pulseHintTop {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* صفحه سفید و محتوای درس‌ها */
+        .white-page-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.94);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.6s ease;
+            transform: translate3d(0, 0, 0);
+            overflow-y: auto;
+            padding: 80px 15px 30px 15px; /* فضای کافی از بالا برای کادر راهنما در حالت باز */
+        }
+
+        .white-page-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .main-title {
+            color: #111;
+            font-size: clamp(1.8rem, 4vw, 2.6rem);
+            margin-bottom: 35px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+            text-align: center;
+        }
+
+        .white-page-overlay.active .main-title {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* کارت‌های سه‌بعدی درس‌ها - ریسپانسیو پیشرفته */
+        .cards-wrapper {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            flex-wrap: wrap;
+        }
+
+        .lesson-card {
+            background: #ffffff;
+            border-radius: 22px;
+            padding: 25px 15px;
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            color: #1e293b;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0,0,0,0.04);
+            transform-style: preserve-3d;
+            transform: perspective(1000px) translateY(40px) scale(0.9);
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s ease, opacity 0.5s ease;
+            cursor: pointer;
+            position: relative;
+            will-change: transform, opacity;
+        }
+
+        .white-page-overlay.active .lesson-card {
+            transform: perspective(1000px) translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        /* تاخیر در نمایش کارت‌ها برای زیبایی آبشاری */
+        .white-page-overlay.active .lesson-card:nth-child(1) { transition-delay: 0.3s; }
+        .white-page-overlay.active .lesson-card:nth-child(2) { transition-delay: 0.4s; }
+        .white-page-overlay.active .lesson-card:nth-child(3) { transition-delay: 0.5s; }
+
+        .lesson-card:hover {
+            transform: perspective(1000px) translateY(-8px) rotateX(4deg) rotateY(-4deg) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-icon {
+            width: clamp(80px, 15vw, 110px);
+            height: clamp(80px, 15vw, 110px);
+            margin: 0 auto 15px;
+            object-fit: contain;
+            transition: transform 0.4s ease;
+        }
+
+        .lesson-card:hover .card-icon {
+            transform: translateZ(25px) scale(1.08);
+        }
+
+        .card-title {
+            font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .card-subtitle {
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            color: #64748b;
+            direction: ltr;
+            font-weight: 600;
+        }
+
+        /* انیمیشن زوم روی آیکون درس انتخابی */
+        .zoomed-in {
+            animation: zoomToIcon 0.9s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+            z-index: 100;
+        }
+
+        @keyframes zoomToIcon {
+            0% {
+                transform: scale(1) translateZ(0);
+                opacity: 1;
+            }
+            40% {
+                transform: scale(1.4) translateZ(100px);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(15) translateZ(800px);
+                opacity: 0;
+            }
+        }
+
+        /* محو کننده کلی صفحه هنگام زوم */
+        .fade-out-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 99;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease;
+        }
+        .fade-out-screen.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene-container" id="sceneContainer">
+        <!-- ویدیو ۱: باز شدن کتاب -->
+        <video id="openVideo" muted playsinline preload="auto">
+            <source src="book-open.mp4" type="video/mp4">
+        </video>
+
+        <!-- ویدیو ۲: بسته شدن کتاب -->
+        <video id="closeVideo" muted playsinline preload="auto">
+            <source src="book-close.mp4" type="video/mp4">
+        </video>
+
+        <!-- راهنما (انتقال یافته به بالای صفحه) -->
+        <div class="navigation-hint" id="navHint">
+            <span>🖱️ اسکرول کنید یا انگشت خود را بکشید 👆</span>
+        </div>
+
+        <!-- صفحه سفید نهایی با کارت‌های درس -->
+        <div class="white-page-overlay" id="whitePage">
+            <h1 class="main-title">انتخاب مبحث گرامر</h1>
+            <div class="cards-wrapper">
+                
+                <div class="lesson-card" onclick="selectLesson(1, event)">
+                    <img src="icon-lesson1.png" alt="Lesson 1" class="card-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2991/2991106.png'">
+                    <div class="card-title">درس اول</div>
+                    <div class="card-subtitle">Countable & Uncountable</div>
+                </div>
+
+                <div class="lesson-card" onclick="selectLesson(2, event)">
+                    <img src="icon-lesson2.png" alt="Lesson 2" class="card-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3208/3208726.png'">
+                    <div class="card-title">درس دوم</div>
+                    <div class="card-subtitle">Present Perfect Tense</div>
+                </div>
+
+                <div class="lesson-card" onclick="selectLesson(3, event)">
+                    <img src="icon-lesson3.png" alt="Lesson 3" class="card-icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2535/2535552.png'">
+                    <div class="card-title">درس سوم</div>
+                    <div class="card-subtitle">Conditional Type I</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="fade-out-screen" id="fadeScreen"></div>
+
+    <script>
+        const openVideo = document.getElementById('openVideo');
+        const closeVideo = document.getElementById('closeVideo');
+        const whitePage = document.getElementById('whitePage');
+        const navHint = document.getElementById('navHint');
+        const fadeScreen = document.getElementById('fadeScreen');
+
+        let currentState = 0; // 0: بسته / ابتدایی, 1: کتاب باز و صفحه سفید
+        let isAnimating = false;
+
+        // آماده‌سازی اولیه ویدیوها
+        openVideo.currentTime = 0;
+        closeVideo.currentTime = 0;
+        openVideo.classList.add('active');
+
+        // مدیریت اسکرول ماوس
+        window.addEventListener('wheel', (e) => {
+            if (isAnimating) return;
+            
+            if (e.deltaY > 0) {
+                if (currentState === 0) triggerOpenBook();
+            } else {
+                if (currentState === 1) triggerCloseBook();
+            }
+        }, { passive: true });
+
+        // پشتیبانی از کلیدهای کیبورد
+        window.addEventListener('keydown', (e) => {
+            if (isAnimating) return;
+
+            if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+                if (currentState === 0) triggerOpenBook();
+            } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+                if (currentState === 1) triggerCloseBook();
+            }
+        });
+
+        // پشتیبانی کامل از لمس (Touch Swiping) برای موبایل و تبلت
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        window.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        window.addEventListener('touchend', (e) => {
+            if (isAnimating) return;
+            touchEndY = e.changedTouches[0].clientY;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeDistance = touchStartY - touchEndY;
+            const minSwipeDistance = 40;
+
+            if (swipeDistance > minSwipeDistance) {
+                if (currentState === 0) triggerOpenBook();
+            } else if (swipeDistance < -minSwipeDistance) {
+                if (currentState === 1) triggerCloseBook();
+            }
+        }
+
+        function triggerOpenBook() {
+            isAnimating = true;
+            navHint.style.opacity = '0';
+            
+            openVideo.classList.add('active');
+            closeVideo.classList.remove('active');
+            openVideo.currentTime = 0;
+            openVideo.play();
+
+            openVideo.onended = () => {
+                whitePage.classList.add('active');
+                currentState = 1;
+                isAnimating = false;
+            };
+        }
+
+        function triggerCloseBook() {
+            isAnimating = true;
+            whitePage.classList.remove('active');
+
+            openVideo.classList.remove('active');
+            closeVideo.classList.add('active');
+            
+            closeVideo.currentTime = 0;
+            closeVideo.play().catch(() => {
+                openVideo.currentTime = 0;
+                openVideo.pause();
+            });
+
+            closeVideo.onended = () => {
+                navHint.style.opacity = '1';
+                currentState = 0;
+                isAnimating = false;
+            };
+            
+            setTimeout(() => {
+                navHint.style.opacity = '1';
+                currentState = 0;
+                isAnimating = false;
+            }, 800);
+        }
+
+                     // عملکرد کلیک روی هر درس و زوم روی آیکون و انتقال به صفحه مربوطه
+        function selectLesson(lessonNumber, event) {
+            if (isAnimating) return;
+            isAnimating = true;
+
+            const selectedCard = event.currentTarget;
+
+            // محو کردن بقیه کارت‌ها و عنوان
+            document.querySelectorAll('.lesson-card').forEach(card => {
+                if (card !== selectedCard) {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                }
+            });
+            document.querySelector('.main-title').style.opacity = '0';
+
+            // اعمال انیمیشن زوم و محو شدن صفحه
+            selectedCard.classList.add('zoomed-in');
+            fadeScreen.classList.add('active');
+
+            // هدایت هوشمند به فایل اختصاصی هر درس پس از اتمام انیمیشن زوم
+            setTimeout(() => {
+                if (lessonNumber === 1) {
+                    window.location.href = './Grammar/Lesson1.html'; // رفتن به درس اول
+                } else if (lessonNumber === 2) {
+                    window.location.href = './Grammar/Lesson2.html'; // رفتن به درس دوم (یا اسم فایل دلخواهت)
+                } else if (lessonNumber === 3) {
+                    window.location.href = './Grammar/Lesson3.html'; // رفتن به درس سوم
+                }
+            }, 850);
+        }
+
+    </script>
+</body>
+</html>
