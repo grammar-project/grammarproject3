@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>درس دوم: A Healthy Lifestyle | Vision 2</title>
+    <style>
+        /* تعریف فونت‌های محلی پوشه fonts */
+        @font-face {
+            font-family: 'Dana';
+            src: url('fonts/dana-regular.woff2') format('woff2'),
+                 url('fonts/dana-regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Dana';
+            src: url('fonts/dana-regularitalic.woff2') format('woff2'),
+                 url('fonts/dana-regularitalic.woff') format('woff');
+            font-weight: 400;
+            font-style: italic;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Dana';
+            src: url('fonts/dana-bold.woff2') format('woff2'),
+                 url('fonts/dana-bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Dana';
+            src: url('fonts/dana-bolditalic.woff2') format('woff2'),
+                 url('fonts/dana-bolditalic.woff') format('woff');
+            font-weight: 700;
+            font-style: italic;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir-Thin.woff2') format('woff2'),
+                 url('fonts/Vazir-Thin.woff') format('woff');
+            font-weight: 100;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir-Light.woff2') format('woff2'),
+                 url('fonts/Vazir-Light.woff') format('woff');
+            font-weight: 300;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir.woff2') format('woff2'),
+                 url('fonts/Vazir.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir-Medium.woff2') format('woff2'),
+                 url('fonts/Vazir-Medium.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Vazir';
+            src: url('fonts/Vazir-Bold.woff2') format('woff2'),
+                 url('fonts/Vazir-Bold.woff') format('woff');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Gheytoon';
+            src: url('fonts/Gheytoon Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: 'Gheytoon';
+            src: url('fonts/Gheytoon Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --bg: #030806;
+            --c: #10b981;
+            --v: #059669;
+            --a: #f59e0b;
+            --g: #34d399;
+            --r: #f43f5e;
+            --t: #f1f5f9;
+            --m: #94a3b8;
+            --ease: cubic-bezier(.7, 0, .2, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        html, body {
+            height: 100%;
+            overflow: hidden;
+            background: var(--bg);
+            color: var(--t);
+            font-family: 'Dana', 'Vazir', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        h1, h2 {
+            font-family: 'Gheytoon', 'Dana', 'Vazir', sans-serif;
+        }
+
+        button {
+            font-family: inherit;
+            color: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .en {
+            direction: ltr;
+            unicode-bidi: isolate;
+            display: inline-block;
+            font-family: 'Dana', 'Vazir', sans-serif;
+        }
+
+        /* آیکن‌های محلی پوشه icons */
+        .ico {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            background-color: currentColor;
+            -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+            -webkit-mask-position: center;
+            mask-position: center;
+            -webkit-mask-size: contain;
+            mask-size: contain;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        /* 3D Background Lighting & Floor Grid */
+        .bg { position: fixed; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+        .orb {
+            position: absolute;
+            width: 55vmax;
+            height: 55vmax;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.22;
+            animation: drift 22s ease-in-out infinite alternate;
+            will-change: transform;
+        }
+        .orb:nth-child(1) { background: var(--c); top: -20vmax; right: -15vmax; }
+        .orb:nth-child(2) { background: #0284c7; bottom: -25vmax; left: -15vmax; animation-delay: -6s; }
+        .orb:nth-child(3) { background: var(--a); width: 35vmax; height: 35vmax; top: 35%; left: 40%; opacity: 0.12; animation-delay: -12s; }
+        
+        @keyframes drift {
+            to { transform: translate3d(6vmax, -6vmax, 0) scale(1.12); }
+        }
+
+        .floor {
+            position: absolute;
+            left: -50%; right: -50%; bottom: -10%; height: 60%;
+            transform: perspective(500px) rotateX(68deg);
+            opacity: 0.2;
+            background: linear-gradient(90deg, rgba(16, 185, 129, 0.25) 1px, transparent 1px) 0 0/60px 60px,
+                        linear-gradient(rgba(16, 185, 129, 0.25) 1px, transparent 1px) 0 0/60px 60px;
+            -webkit-mask-image: linear-gradient(to top, #000 20%, transparent 90%);
+            mask-image: linear-gradient(to top, #000 20%, transparent 90%);
+        }
+
+        /* Header */
+        .top-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            padding: 1rem;
+            z-index: 20;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+        }
+        .nav-home {
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.625rem 1rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            color: var(--t);
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .nav-home:hover {
+            background: #10b981;
+            color: #000000;
+        }
+        .nav-home .ico { color: #34d399; font-size: 0.9rem; }
+        .nav-home:hover .ico { color: #000000; }
+
+        .sound-btn {
+            pointer-events: auto;
+            padding: 0.55rem 0.8rem;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sound-btn:hover { background: rgba(255, 255, 255, 0.1); }
+
+        /* 3D Scene Transitions */
+        .stage { position: fixed; inset: 0; perspective: 1400px; z-index: 1; overflow: hidden; }
+        .scene {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.9s var(--ease), opacity 0.6s var(--ease);
+            will-change: transform, opacity;
+        }
+        .scene[data-s="next"] { transform: translate3d(0, 80%, -600px) rotateX(-35deg); }
+        .scene[data-s="prev"] { transform: translate3d(0, -80%, -600px) rotateX(35deg); }
+        .scene[data-s="cur"] { opacity: 1; pointer-events: auto; transform: none; }
+        
+        .pane {
+            height: 100%;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-width: thin;
+            scrollbar-color: #065f46 transparent;
+            padding: calc(90px + env(safe-area-inset-top)) 4vw calc(120px + env(safe-area-inset-bottom));
+        }
+        
+        .wrap { max-width: 1040px; margin: auto; display: grid; gap: 28px; }
+        .pane.hero { display: grid; place-items: center; overflow: hidden; padding-bottom: 60px; }
+
+        /* Reveal Animations */
+        .rv {
+            opacity: 0;
+            transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s;
+            transition-delay: var(--d, 0s);
+        }
+        .rv[data-fx="zoom"] { transform: scale(0.75) translateZ(-80px); }
+        .rv[data-fx="left"] { transform: translateX(-70px) rotateY(20deg); }
+        .rv[data-fx="right"] { transform: translateX(70px) rotateY(-20deg); }
+        .rv[data-fx="blur"] { filter: blur(16px); transform: translateY(30px) scale(0.95); }
+        .rv[data-fx="flip"] { transform: perspective(800px) rotateX(-65deg); transform-origin: top; }
+        .rv[data-fx="up"] { transform: translateY(55px); }
+        .rv.in { opacity: 1; transform: none; filter: none; }
+
+        /* 3D Interactive Tilt on Hover */
+        .tilt {
+            transform-style: preserve-3d;
+            transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+            transition: transform 0.25s ease-out, border-color 0.3s, box-shadow 0.3s;
+            will-change: transform;
+        }
+        .tilt:hover {
+            box-shadow: 0 28px 50px rgba(0, 0, 0, 0.6), 0 0 25px rgba(16, 185, 129, 0.15);
+        }
+
+        /* Glassmorphism Card Style */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 24px;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .glass:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        /* Hero Banner & Chips */
+        .hero-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+        }
+        .banner-container {
+            position: relative;
+            width: min(92vw, 880px);
+            border-radius: 32px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
+            animation: heroFloat 6s ease-in-out infinite;
+            transition: translate 0.25s ease-out;
+            will-change: transform, translate;
+        }
+        .banner-container::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.16) 50%, transparent 60%);
+            transform: translateX(-130%);
+            animation: shine 5.5s 1.5s infinite;
+            pointer-events: none;
+        }
+        @keyframes shine {
+            to { transform: translateX(130%); }
+        }
+        @keyframes heroFloat {
+            50% { transform: translateY(-10px) rotateX(2deg); }
+        }
+        .banner-inner {
+            position: relative;
+            width: 100%;
+            height: 20rem;
+            background: linear-gradient(135deg, #022c22, #042f2e, #020617);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 32px;
+        }
+        @media (min-width: 640px) {
+            .banner-inner { height: 24rem; }
+        }
+        .banner-icon-box {
+            width: 5rem;
+            height: 5rem;
+            margin-bottom: 1rem;
+            border-radius: 1.5rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #34d399;
+            font-size: 2rem;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.1);
+        }
+        .banner-title {
+            font-size: clamp(1.85rem, 5vw, 3rem);
+            font-weight: 700;
+            background: linear-gradient(to right, #34d399, #5eead4, #fcd34d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        .banner-sub {
+            color: rgba(52, 211, 153, 0.8);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        .hero-desc-box { max-width: 36rem; padding: 0 0.5rem; }
+        .hero-title {
+            font-size: clamp(1.4rem, 3.5vw, 1.875rem);
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 0.75rem;
+        }
+        .hero-text {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        .chip-f {
+            position: absolute;
+            padding: 8px 18px;
+            border-radius: 40px;
+            background: rgba(6, 78, 59, 0.45);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            backdrop-filter: blur(12px);
+            font-size: 0.95rem;
+            color: var(--g);
+            font-weight: 700;
+            direction: ltr;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transform: translate3d(calc(var(--mx, 0) * var(--z, 25) * 1px), calc(var(--my, 0) * var(--z, 25) * 1px), 0);
+            animation: bob 6s ease-in-out infinite alternate;
+            animation-delay: var(--w);
+            z-index: 10;
+            will-change: transform;
+        }
+        @media (max-width: 640px) {
+            .chip-f { font-size: 0.8rem; padding: 6px 12px; }
+        }
+        @keyframes bob {
+            50% { margin-top: -14px; }
+        }
+
+        /* Section Header & Typography */
+        .sec-head {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+        .sec-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+        .sec-icon-emerald {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+        .sec-icon-teal {
+            background: rgba(20, 184, 166, 0.1);
+            border: 1px solid rgba(20, 184, 166, 0.3);
+            color: #2dd4bf;
+        }
+        .sec-title {
+            font-size: clamp(1.4rem, 3.5vw, 1.875rem);
+            font-weight: 700;
+        }
+        .lead-text {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.75;
+        }
+
+        /* Grids */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+        @media (min-width: 768px) {
+            .grid-2 { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+        @media (min-width: 768px) {
+            .grid-3 { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* Custom Formula Box */
+        .formula-box {
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.4), rgba(2, 44, 34, 0.6));
+            border: 1px solid var(--c);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            direction: ltr;
+            color: var(--g);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.15);
+        }
+
+        /* Cards & Examples */
+        .sub-head {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .ex-list { display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.875rem; }
+        .ex-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.75rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .ex-fa { font-size: 0.75rem; color: #94a3b8; margin-top: 0.25rem; }
+
+        .card-border-emerald { border-color: rgba(16, 185, 129, 0.3); }
+        .card-border-amber { border-color: rgba(245, 158, 11, 0.3); }
+        .card-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .pill-emerald {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+        }
+        .pill-amber {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            background: rgba(245, 158, 11, 0.1);
+            color: #fbbf24;
+        }
+        .tag-emerald {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #34d399;
+            background: rgba(16, 185, 129, 0.1);
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.375rem;
+            display: inline-block;
+        }
+        .tag-amber {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #fbbf24;
+            background: rgba(245, 158, 11, 0.1);
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.375rem;
+            display: inline-block;
+        }
+        .tag-sky {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #38bdf8;
+            background: rgba(14, 165, 233, 0.1);
+            padding: 0.25rem 0.625rem;
+            border-radius: 0.375rem;
+            display: inline-block;
+        }
+        .role-title { font-weight: 700; color: #f1f5f9; margin: 0.5rem 0; }
+        .role-sub { font-size: 0.75rem; color: #94a3b8; margin-bottom: 0.75rem; }
+
+        .hint-emerald {
+            padding: 0.625rem;
+            border-radius: 0.5rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(16, 185, 129, 0.15);
+            color: #cbd5e1;
+        }
+        .quote-emerald {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: rgba(2, 44, 34, 0.35);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #e2e8f0;
+        }
+        .hint-amber {
+            padding: 0.625rem;
+            border-radius: 0.5rem;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            color: #cbd5e1;
+        }
+        .quote-amber {
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: rgba(69, 26, 3, 0.35);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: #e2e8f0;
+        }
+
+        /* Quiz Section */
+        .quiz-head {
+            text-align: center;
+            max-width: 36rem;
+            margin: 0 auto 1rem;
+        }
+        .quiz-title {
+            font-size: clamp(1.5rem, 4vw, 1.875rem);
+            font-weight: 700;
+            background: linear-gradient(to right, #34d399, #fcd34d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .quiz-sub { color: #94a3b8; font-size: 0.875rem; margin-top: 0.25rem; }
+        .quiz-card { max-width: 42rem; margin: auto; width: 100%; }
+        .quiz-pg-track {
+            width: 100%;
+            height: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        .quiz-pg-fill {
+            height: 100%;
+            background: linear-gradient(to right, #34d399, #fbbf24);
+            transition: width 0.5s ease;
+            width: 0;
+        }
+        .quiz-q {
+            font-size: clamp(1.15rem, 3vw, 1.5rem);
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            display: block;
+        }
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        @media (min-width: 640px) {
+            .quiz-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .quiz-option {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 16px;
+            padding: 14px 24px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .quiz-option:hover {
+            background: var(--c);
+            color: #04121f;
+            border-color: var(--c);
+            transform: translateY(-2px);
+        }
+        .quiz-option.right { background: var(--g) !important; color: #04121f !important; border-color: var(--g) !important; }
+        .quiz-option.wrong { background: var(--r) !important; color: #fff !important; border-color: var(--r) !important; }
+
+        .quiz-end { text-align: center; padding: 1.5rem 0; }
+        .quiz-score { font-size: 3rem; font-weight: 700; color: #fbbf24; margin-bottom: 0.5rem; }
+        .quiz-msg { color: #e2e8f0; font-weight: 700; font-size: 1.125rem; margin-bottom: 1.5rem; }
+        .quiz-reset {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            background: #10b981;
+            color: #000000;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.25);
+            transition: background 0.2s;
+        }
+        .quiz-reset:hover { background: #34d399; }
+
+        /* Navigation Controls */
+        .dots-nav {
+            position: fixed;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        @media (min-width: 640px) {
+            .dots-nav { left: 20px; }
+        }
+        .dots-nav button {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            border: 0;
+            background: rgba(255, 255, 255, 0.25);
+            cursor: pointer;
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dots-nav button.on {
+            background: var(--c);
+            transform: scale(1.6);
+            box-shadow: 0 0 16px var(--c);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            z-index: 30;
+            background: linear-gradient(90deg, var(--c), var(--a));
+            transform-origin: right;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        /* Scroll Hint */
+        .scroll-hint {
+            position: fixed;
+            bottom: 1.25rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            pointer-events: none;
+            opacity: 0.7;
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 0.3; }
+        }
+
+        /* Color Helpers */
+        .c-emerald-300 { color: #6ee7b7; }
+        .c-emerald-400 { color: #34d399; }
+        .c-teal-400 { color: #2dd4bf; }
+        .c-amber-300 { color: #fcd34d; }
+        .c-amber-400 { color: #fbbf24; }
+        .c-sky-300 { color: #7dd3fc; }
+        .c-slate-200 { color: #e2e8f0; }
+        .c-slate-500 { color: #64748b; }
+        .fw-bold { font-weight: 700; }
+        .fs-xl { font-size: 1.25rem; }
+        .fs-xs { font-size: 0.75rem; }
+        .mb-1 { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+
+<div class="bg">
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="orb"></div>
+    <div class="floor"></div>
+</div>
+
+<div class="progress-bar" id="bar"></div>
+
+<!-- Quick Navigation Header -->
+<header class="top-header">
+    <a href="../index.html" onclick="go(0)" class="nav-home">
+        <span class="ico" style="-webkit-mask-image:url('icons/book-open-solid.svg');mask-image:url('icons/book-open-solid.svg')"></span>
+        <span>⬅️ منوی اصلی کتاب</span>
+    </a>
+    <div>
+        <button id="soundToggle" onclick="toggleAudio()" class="sound-btn" aria-label="تغییر وضعیت صدا">
+            <span class="ico c-emerald-400" style="-webkit-mask-image:url('icons/volume-high-solid.svg');mask-image:url('icons/volume-high-solid.svg')"></span>
+        </button>
+    </div>
+</header>
+
+<nav class="dots-nav" id="dots"></nav>
+
+<main class="stage" id="stage">
+
+    <!-- SECTION 1: HERO / COVER -->
+    <section class="scene">
+        <div class="pane hero" id="hero">
+            <span class="chip-f" style="--z: 30; --w: 0s; top: 18%; right: 8%;">Present Perfect</span>
+            <span class="chip-f" style="--w: -2s; --z: -40; top: 28%; left: 6%;">Gerunds (-ing)</span>
+            <span class="chip-f" style="--w: -4s; --z: 45; bottom: 22%; right: 10%;">Since & For</span>
+            
+            <div class="hero-center">
+                <div class="banner-container" id="banner">
+                    <div class="banner-inner">
+                        <div class="banner-icon-box">
+                            <span class="ico" style="-webkit-mask-image:url('icons/heart-pulse-solid.svg');mask-image:url('icons/heart-pulse-solid.svg')"></span>
+                        </div>
+                        <h2 class="banner-title en">
+                            A Healthy Lifestyle
+                        </h2>
+                        <p class="banner-sub">کتاب انگلیسی پایه یازدهم - درس دوم</p>
+                    </div>
+                </div>
+
+                <div class="hero-desc-box">
+                    <h1 class="rv hero-title" data-fx="blur">
+                        آموزش جامع گرامر و نکات کلیدی
+                    </h1>
+                    <p class="rv hero-text" data-fx="up">
+                        در این درس با زمان حال کامل (Present Perfect) و کاربرد اسم مصدر (Gerund) آشنا می‌شوید.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: PRESENT PERFECT -->
+    <section class="scene">
+        <div class="pane">
+            <div class="wrap">
+                <div class="sec-head rv" data-fx="blur">
+                    <div class="sec-icon sec-icon-emerald">
+                        <span class="ico" style="-webkit-mask-image:url('icons/clock-rotate-left-solid.svg');mask-image:url('icons/clock-rotate-left-solid.svg')"></span>
+                    </div>
+                    <div>
+                        <h2 class="sec-title c-emerald-400">زمان حال کامل (Present Perfect)</h2>
+                    </div>
+                </div>
+                
+                <p class="rv lead-text" data-fx="up">
+                    این زمان برای کارهایی استفاده می‌شود که در گذشته شروع شده و <strong>اثر یا نتیجه آن‌ها تا زمان حال باقی مانده است</strong> یا تا زمان حال ادامه داشته‌اند.
+                </p>
+
+                <!-- Formula Box -->
+                <div class="formula-box tilt rv" data-fx="zoom">
+                    Subject + have / has + Past Participle (V3)
+                </div>
+
+                <div class="grid-2">
+                    <article class="glass tilt rv" data-fx="left">
+                        <h3 class="sub-head c-emerald-400">
+                            <span class="ico" style="-webkit-mask-image:url('icons/circle-check-solid.svg');mask-image:url('icons/circle-check-solid.svg')"></span>
+                            جملات مثبت (Affirmative)
+                        </h3>
+                        <div class="ex-list">
+                            <div class="ex-box">
+                                <p class="en fw-bold c-slate-200">I have watched that movie.</p>
+                                <p class="ex-fa">من آن فیلم را دیده‌ام.</p>
+                            </div>
+                            <div class="ex-box">
+                                <p class="en fw-bold c-slate-200">She has finished her homework.</p>
+                                <p class="ex-fa">او تکالیفش را تمام کرده است.</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="glass tilt rv" data-fx="right">
+                        <h3 class="sub-head c-amber-400">
+                            <span class="ico" style="-webkit-mask-image:url('icons/circle-minus-solid.svg');mask-image:url('icons/circle-minus-solid.svg')"></span>
+                            جملات منفی (Negative)
+                        </h3>
+                        <div class="ex-list">
+                            <div class="ex-box">
+                                <p class="en fw-bold c-slate-200">They haven't arrived yet.</p>
+                                <p class="ex-fa">آن‌ها هنوز نرسیده‌اند.</p>
+                            </div>
+                            <div class="ex-box">
+                                <p class="en fw-bold c-slate-200">He hasn't forgotten the accident.</p>
+                                <p class="ex-fa">او تصادف را فراموش نکرده است.</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: SINCE vs FOR -->
+    <section class="scene">
+        <div class="pane">
+            <div class="wrap">
+                <h2 class="rv sec-title c-amber-400" data-fx="blur">
+                    قیدهای مهم: Since و For
+                </h2>
+                <p class="rv lead-text" data-fx="up">
+                    در زمان حال کامل، برای مشخص کردن زمان وقوع عمل از <span class="en fw-bold c-emerald-400">Since</span> و <span class="en fw-bold c-amber-400">For</span> استفاده می‌شود.
+                </p>
+
+                <div class="grid-2">
+                    <!-- Since Card -->
+                    <div class="glass tilt card-border-emerald rv" data-fx="left">
+                        <div class="card-top-row">
+                            <h3 class="fs-xl fw-bold c-emerald-400 en">SINCE</h3>
+                            <span class="pill-emerald">نقطه شروع زمان</span>
+                        </div>
+                        <p class="lead-text mb-1" style="font-size:0.875rem;">برای اشاره به <strong>نقطه دقیقی</strong> در گذشته که عمل از آنجا شروع شده است.</p>
+                        <div class="ex-list fs-xs">
+                            <div class="hint-emerald">
+                                <span class="en fw-bold c-emerald-300">since 2010 / since yesterday / since morning</span>
+                            </div>
+                            <div class="quote-emerald">
+                                <p class="en fw-bold">I have lived here since 2015.</p>
+                                <p class="ex-fa">من از سال ۲۰۱۵ اینجا زندگی کرده‌ام.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- For Card -->
+                    <div class="glass tilt card-border-amber rv" data-fx="right">
+                        <div class="card-top-row">
+                            <h3 class="fs-xl fw-bold c-amber-400 en">FOR</h3>
+                            <span class="pill-amber">طول مدت زمان</span>
+                        </div>
+                        <p class="lead-text mb-1" style="font-size:0.875rem;">برای اشاره به <strong>بازه و طول مدت زمان</strong> انجام یک عمل.</p>
+                        <div class="ex-list fs-xs">
+                            <div class="hint-amber">
+                                <span class="en fw-bold c-amber-300">for 2 hours / for 5 years / for a long time</span>
+                            </div>
+                            <div class="quote-amber">
+                                <p class="en fw-bold">She has studied English for 3 years.</p>
+                                <p class="ex-fa">او به مدت ۳ سال انگلیسی خوانده است.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: GERUNDS -->
+    <section class="scene">
+        <div class="pane">
+            <div class="wrap">
+                <div class="sec-head rv" data-fx="blur">
+                    <div class="sec-icon sec-icon-teal">
+                        <span class="ico" style="-webkit-mask-image:url('icons/font-solid.svg');mask-image:url('icons/font-solid.svg')"></span>
+                    </div>
+                    <h2 class="sec-title c-teal-400">اسم مصدر (Gerunds)</h2>
+                </div>
+
+                <p class="rv lead-text" data-fx="up">
+                    هرگاه به انتهای فعل پسوند <span class="en c-emerald-400 fw-bold">-ing</span> اضافه کنیم و نقش <strong>اسم</strong> در جمله پیدا کند، به آن <strong>Gerund</strong> می‌گویند.
+                </p>
+
+                <div class="grid-3">
+                    <!-- Subject role -->
+                    <div class="glass tilt rv" data-fx="zoom" style="--d: 0.05s">
+                        <span class="tag-emerald">نقش اول</span>
+                        <h4 class="role-title">به عنوان فاعل جمله</h4>
+                        <p class="role-sub">در ابتدای جمله قرار می‌گیرد.</p>
+                        <div class="ex-box fs-xs">
+                            <p class="en fw-bold c-emerald-300">Smoking is bad for health.</p>
+                            <p class="ex-fa">سیگار کشیدن برای سلامتی مضر است.</p>
+                        </div>
+                    </div>
+
+                    <!-- Object role -->
+                    <div class="glass tilt rv" data-fx="zoom" style="--d: 0.14s">
+                        <span class="tag-amber">نقش دوم</span>
+                        <h4 class="role-title">بعد از حرف اضافه</h4>
+                        <p class="role-sub">پس از حروف اضافه مثل of, in, about.</p>
+                        <div class="ex-box fs-xs">
+                            <p class="en fw-bold c-amber-300">He is interested in swimming.</p>
+                            <p class="ex-fa">او به شنا کردن علاقه‌مند است.</p>
+                        </div>
+                    </div>
+
+                    <!-- Specific verbs -->
+                    <div class="glass tilt rv" data-fx="zoom" style="--d: 0.23s">
+                        <span class="tag-sky">نقش سوم</span>
+                        <h4 class="role-title">بعد از افعال خاص</h4>
+                        <p class="role-sub">افعالی مانند enjoy, finish, love.</p>
+                        <div class="ex-box fs-xs">
+                            <p class="en fw-bold c-sky-300">She enjoys reading books.</p>
+                            <p class="ex-fa">او از کتاب خواندن لذت می‌برد.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: INTERACTIVE QUIZ -->
+    <section class="scene">
+        <div class="pane">
+            <div class="wrap">
+                <div class="quiz-head rv" data-fx="blur">
+                    <h2 class="quiz-title">
+                        کوییز سنجش یادگیری
+                    </h2>
+                    <p class="quiz-sub">میزان تسلط خود بر درس دوم را بسنجید!</p>
+                </div>
+
+                <div class="glass tilt quiz-card rv" data-fx="zoom">
+                    <!-- Progress Bar -->
+                    <div class="quiz-pg-track">
+                        <div id="pg" class="quiz-pg-fill"></div>
+                    </div>
+
+                    <!-- Question Container -->
+                    <div id="quizContainer">
+                        <h3 id="qs" class="en quiz-q">
+                            ...
+                        </h3>
+                        <div id="op" class="quiz-grid en">
+                            <!-- Options will be dynamic -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<div class="scroll-hint">
+    <span>برای ورق زدن اسکرول کنید</span>
+    <span class="ico" style="-webkit-mask-image:url('icons/arrow-down-solid.svg');mask-image:url('icons/arrow-down-solid.svg')"></span>
+</div>
+
+<script>
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+const scenes = $$(".scene");
+const N = scenes.length;
+let cur = 0;
+let hold = 0;
+let lock = false;
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let soundEnabled = true;
+
+function playTone(freq, type = 'sine', duration = 0.15) {
+    if (!soundEnabled) return;
+    try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch(e){}
+}
+
+function toggleAudio() {
+    soundEnabled = !soundEnabled;
+    const btn = $("#soundToggle");
+    btn.innerHTML = soundEnabled 
+        ? `<span class="ico c-emerald-400" style="-webkit-mask-image:url('icons/volume-high-solid.svg');mask-image:url('icons/volume-high-solid.svg')"></span>` 
+        : `<span class="ico c-slate-500" style="-webkit-mask-image:url('icons/volume-xmark-solid.svg');mask-image:url('icons/volume-xmark-solid.svg')"></span>`;
+}
+
+/* Quiz Data */
+const qz = [
+    ["We ___ lived in this city since 2018.", ["have", "has", "are", "were"], 0],
+    ["She has not finished her homework ___.", ["already", "yet", "since", "ever"], 1],
+    ["___ is a very healthy exercise for all ages.", ["Swim", "Swam", "Swimming", "Swims"], 2],
+    ["Have you ___ traveled to a foreign country?", ["ever", "never", "yet", "for"], 0],
+    ["They have played tennis ___ two hours.", ["since", "for", "from", "in"], 1]
+];
+
+let qi = 0, sc = 0;
+
+function ask() {
+    const q = qz[qi];
+    $("#pg").style.width = (qi / qz.length * 100) + "%";
+    
+    if (qi >= qz.length) {
+        playTone(600, 'triangle', 0.4);
+        $("#quizContainer").innerHTML = `
+            <div class="quiz-end">
+                <div class="quiz-score en">${sc} / ${qz.length}</div>
+                <p class="quiz-msg">${sc >= 4 ? "آفرین! نتیجه عالی بود 🎉" : "خوب بود! تمرین بیشتری انجام دهید 💪"}</p>
+                <button onclick="resetQuiz()" class="quiz-reset">
+                    تلاش مجدد
+                </button>
+            </div>
+        `;
+        return;
+    }
+
+    $("#qs").textContent = q[0];
+    $("#op").innerHTML = q[1].map((o, i) => `
+        <button class="quiz-option" data-i="${i}">${o}</button>
+    `).join("");
+
+    $$("#op .quiz-option").forEach(b => {
+        b.onclick = () => {
+            if (lock) return;
+            lock = true;
+            const idx = +b.dataset.i;
+            const isRight = idx === q[2];
+            
+            if (isRight) {
+                sc++;
+                b.classList.add("right");
+                playTone(523.25, 'sine', 0.2);
+            } else {
+                b.classList.add("wrong");
+                $$("#op .quiz-option")[q[2]].classList.add("right");
+                playTone(220, 'sawtooth', 0.25);
+            }
+
+            setTimeout(() => {
+                lock = false;
+                qi++;
+                ask();
+            }, 1200);
+        };
+    });
+}
+
+function resetQuiz() {
+    qi = 0; 
+    sc = 0;
+    $("#quizContainer").innerHTML = `
+        <h3 id="qs" class="en quiz-q"></h3>
+        <div id="op" class="quiz-grid en"></div>
+    `;
+    ask();
+}
+
+ask();
+
+/* Scroll Reveal Observer & Pane Scroll Progress */
+$$(".pane").forEach(p => {
+    const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add("in");
+                io.unobserve(e.target);
+            }
+        });
+    }, { root: p, threshold: 0.1 });
+    
+    $$(".rv", p).forEach(el => io.observe(el));
+    p.addEventListener("scroll", prog, { passive: true });
+});
+
+function pane() { return $(".pane", scenes[cur]); }
+
+function prog() {
+    const p = pane();
+    const m = p.scrollHeight - p.clientHeight;
+    const scrollPercent = (cur + (m > 0 ? p.scrollTop / m : 1)) / (N - 1 || 1);
+    $("#bar").style.transform = `scaleX(${Math.min(Math.max(scrollPercent, 0.01), 1)})`;
+}
+
+/* 3D Scene Navigation */
+function go(n) {
+    if (n < 0 || n >= N || n === cur) return;
+    playTone(400, 'sine', 0.08);
+    
+    const back = n < cur;
+    cur = n;
+    hold = Date.now() + 900;
+    
+    scenes.forEach((s, i) => {
+        s.dataset.s = i < cur ? "prev" : i > cur ? "next" : "cur";
+    });
+
+    const p = pane();
+    if (cur === 0) {
+        p.scrollTop = 0;
+    } else {
+        p.scrollTop = back ? p.scrollHeight : 0;
+    }
+
+    $$("#dots button").forEach((d, i) => d.classList.toggle("on", i === cur));
+    prog();
+}
+
+function edge(dn) {
+    const p = pane();
+    if (cur === 0) return dn ? true : false;
+    return dn ? p.scrollTop + p.clientHeight >= p.scrollHeight - 4 : p.scrollTop <= 4;
+}
+
+function step(dn) {
+    if (edge(dn)) go(cur + (dn ? 1 : -1));
+}
+
+// Setup Navigation Dots
+scenes.forEach((s, i) => s.dataset.s = i ? "next" : "cur");
+$("#dots").innerHTML = scenes.map((_, i) => `<button aria-label="بخش ${i + 1}"></button>`).join("");
+$$("#dots button").forEach((d, i) => {
+    d.onclick = () => go(i);
+    d.classList.toggle("on", !i);
+});
+
+// Event Listeners for Navigation
+addEventListener("wheel", e => {
+    const dn = e.deltaY > 0;
+    if (!edge(dn)) {
+        hold = Date.now() + 400;
+        return;
+    }
+    if (Date.now() > hold) step(dn);
+}, { passive: true });
+
+addEventListener("keydown", e => {
+    if (["ArrowDown", "PageDown", " "].includes(e.key)) step(true);
+    else if (["ArrowUp", "PageUp"].includes(e.key)) step(false);
+});
+
+let y0 = 0, e0 = [false, false];
+addEventListener("touchstart", e => {
+    y0 = e.touches[0].clientY;
+    e0 = [edge(true), edge(false)];
+}, { passive: true });
+
+addEventListener("touchend", e => {
+    const d = y0 - e.changedTouches[0].clientY;
+    if (Math.abs(d) < 60 || Date.now() < hold) return;
+    if (d > 0 && e0[0]) go(cur + 1);
+    else if (d < 0 && e0[1]) go(cur - 1);
+}, { passive: true });
+
+/* 3D Interactive Tilt & Hero Parallax */
+let raf = 0, px = 0, py = 0, tg = null;
+addEventListener("pointermove", e => {
+    px = e.clientX;
+    py = e.clientY;
+    tg = e.target.closest?.(".tilt");
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+        raf = 0;
+        const h = $("#hero");
+        if (h) {
+            h.style.setProperty("--mx", (px / innerWidth - 0.5).toFixed(2));
+            h.style.setProperty("--my", (py / innerHeight - 0.5).toFixed(2));
+        }
+        const b = $("#banner");
+        if (b) {
+            b.style.translate = `${(px / innerWidth - 0.5) * -18}px ${(py / innerHeight - 0.5) * -12}px`;
+        }
+        if (tg) {
+            const r = tg.getBoundingClientRect();
+            tg.style.setProperty("--ry", ((px - r.left) / r.width - 0.5) * 14 + "deg");
+            tg.style.setProperty("--rx", ((py - r.top) / r.height - 0.5) * -14 + "deg");
+        }
+    });
+}, { passive: true });
+
+document.addEventListener("pointerout", e => {
+    const t = e.target.closest?.(".tilt");
+    if (t) {
+        t.style.setProperty("--rx", "0deg");
+        t.style.setProperty("--ry", "0deg");
+    }
+});
+</script>
+
+</body>
+</html>
